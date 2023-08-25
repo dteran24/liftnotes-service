@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,6 +21,7 @@ public class Workout {
     private int sets;
     private String notes;
     private String date;
+    private List<WorkoutHistory> history;
 
     public void updateWorkout(Workout updatedWorkout) {
         this.name = updatedWorkout.name;
