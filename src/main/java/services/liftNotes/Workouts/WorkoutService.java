@@ -43,6 +43,9 @@ public class WorkoutService {
         String genre = workout.getGenre();
             for (WorkoutList workoutList : workouts) {
                 if (workoutList.getGenre().equals(genre)) {
+                    if(workout.getNotes() == null){
+                        workout.setNotes("None");
+                    }
                     workoutList.addWorkout(workout);
                 break;
             }
