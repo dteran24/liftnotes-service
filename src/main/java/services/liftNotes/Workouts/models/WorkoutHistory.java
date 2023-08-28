@@ -19,5 +19,8 @@ public class WorkoutHistory {
         this.sets = workout.getSets();
         this.notes = workout.getNotes();
     }
+    public WorkoutHistory() {
+        // Default constructor logic (if needed)
+    }
 
 }
