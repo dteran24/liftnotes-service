@@ -3,17 +3,22 @@ package services.liftNotes.Workouts;
 import org.springframework.stereotype.Service;
 import services.liftNotes.Utils.GetDate;
 import services.liftNotes.Utils.RandomIdGenerator;
+import services.liftNotes.Users.models.User;
 import services.liftNotes.Workouts.models.Workout;
 import services.liftNotes.Workouts.models.WorkoutHistory;
 import services.liftNotes.Workouts.models.WorkoutList;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class WorkoutService {
+//        public static User user = new User(RandomIdGenerator.generateRandomId(),"Daniel", 25, 158, "5'2","");
+        private static final String DEFAULT_NOTES = "None";
         public static List<WorkoutList> workouts = new ArrayList<>();
         public static List<Workout> dummyDataChest = new ArrayList<>();
         public static List<Workout> dummyDataLegs = new ArrayList<>();
@@ -44,7 +49,7 @@ public class WorkoutService {
             for (WorkoutList workoutList : workouts) {
                 if (workoutList.getGenre().equals(genre)) {
                     if(workout.getNotes() == null){
-                        workout.setNotes("None");
+                        workout.setNotes(DEFAULT_NOTES);
                     }
                     workoutList.addWorkout(workout);
                 break;
@@ -85,10 +90,10 @@ public class WorkoutService {
         return Optional.empty(); // Workout not found
     }
 
-    public Optional<Workout> findWorkoutById(String id) {
-        return workouts.stream()
-                .flatMap(workoutList -> workoutList.getWorkouts().stream())
-                .filter(workout -> workout.getId().equals(id))
-                .findFirst();
-    }
+//    public Optional<Workout> findWorkoutById(String id) {
+//        return workouts.stream()
+//                .flatMap(workoutList -> workoutList.getWorkouts().stream())
+//                .filter(workout -> workout.getId().equals(id))
+//                .findFirst();
+//    }
 }

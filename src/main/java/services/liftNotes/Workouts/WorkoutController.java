@@ -1,6 +1,7 @@
 package services.liftNotes.Workouts;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -22,29 +23,33 @@ private WorkoutService workoutService;
 public WorkoutController(WorkoutService workoutService){
     this.workoutService = workoutService;
 }
+@ResponseStatus(HttpStatus.OK)
 @GetMapping("")
 public List<WorkoutList> showAllWorkouts(){
     List<WorkoutList> list = workoutService.getWorkouts();
     return list;
 }
-
+@ResponseStatus(HttpStatus.CREATED)
 @PostMapping("/add")
-public ResponseEntity<String> addWorkout(@RequestBody Workout workout){
+public void addWorkout(@RequestBody Workout workout){
     workoutService.addWorkout(workout);
-    return ResponseEntity.ok("Workout Added!");
+
 }
+@ResponseStatus(HttpStatus.ACCEPTED)
 @DeleteMapping("/{id}")
-public ResponseEntity<String> deleteWorkout(@PathVariable String id){
+public void deleteWorkout(@PathVariable String id){
     workoutService.removeWorkoutById(id);
-    return ResponseEntity.ok("Workout Removed!");
 }
+@ResponseStatus(HttpStatus.ACCEPTED)
 @PatchMapping("/{id}")
-public ResponseEntity<String> partialUpdateWorkout(@PathVariable String id, @RequestBody Workout workout) {
+public void partialUpdateWorkout(@PathVariable String id, @RequestBody Workout workout) {
         workoutService.updateWorkoutById(id, workout);
-        return ResponseEntity.ok("Workout updated successfully");
-    }
-    @GetMapping("/{id}")
-    public Optional<Workout> findWorkout(@PathVariable String id) {
-        return workoutService.findWorkoutById(id);
-    }
 }
+//@GetMapping("/{id}")
+//public Optional<Workout> findWorkout(@PathVariable String id) {
+//        return workoutService.findWorkoutById(id);
+//    }
+}
+
+
+
