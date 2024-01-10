@@ -36,7 +36,6 @@ public class WorkoutService {
         workouts.add(new WorkoutList("Legs", dummyDataLegs));
         workouts.add(new WorkoutList("Arms", dummyDataArms));
         workouts.add(new WorkoutList("Back", dummyDataBack));
-
     }
     public List<WorkoutList> getWorkouts(){
         return workouts;

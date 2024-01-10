@@ -1,16 +1,11 @@
 package services.liftNotes.Workouts;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import services.liftNotes.Workouts.models.Workout;
 import services.liftNotes.Workouts.models.WorkoutList;
-
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+
 
 @CrossOrigin
 @RestController
