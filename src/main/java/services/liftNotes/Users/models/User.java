@@ -1,8 +1,5 @@
 package services.liftNotes.Users.models;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,11 +10,13 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String name;
+    private String username;
+    private String email;
+    private String password;
     private Integer age;
     private Integer weight;
     private String height;
-    private String imageUrl;
+
 
     public User(){}
 
