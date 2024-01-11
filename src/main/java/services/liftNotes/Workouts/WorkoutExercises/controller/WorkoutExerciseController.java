@@ -1,12 +1,12 @@
-package services.liftNotes.WorkoutExercises.controller;
+package services.liftNotes.Workouts.WorkoutExercises.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import services.liftNotes.WorkoutExercises.model.WorkoutExercise;
-import services.liftNotes.WorkoutExercises.service.WorkoutExerciseService;
+import services.liftNotes.Workouts.WorkoutExercises.model.WorkoutExercise;
+import services.liftNotes.Workouts.WorkoutExercises.service.WorkoutExerciseService;
 
 @CrossOrigin
 @RestController

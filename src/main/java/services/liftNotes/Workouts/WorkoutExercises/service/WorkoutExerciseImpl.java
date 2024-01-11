@@ -1,9 +1,9 @@
-package services.liftNotes.WorkoutExercises.service;
+package services.liftNotes.Workouts.WorkoutExercises.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import services.liftNotes.WorkoutExercises.model.WorkoutExercise;
-import services.liftNotes.WorkoutExercises.repository.WorkoutExerciseRepo;
+import services.liftNotes.Workouts.WorkoutExercises.model.WorkoutExercise;
+import services.liftNotes.Workouts.WorkoutExercises.repository.WorkoutExerciseRepo;
 
 @Service
 public class WorkoutExerciseImpl implements WorkoutExerciseService{

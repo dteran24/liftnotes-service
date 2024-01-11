@@ -1,4 +1,4 @@
-package services.liftNotes.WorkoutExercises.model;
+package services.liftNotes.Workouts.WorkoutExercises.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;

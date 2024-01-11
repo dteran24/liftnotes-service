@@ -12,8 +12,13 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
     @Autowired
     private UserService userService;
+    @GetMapping("/secured")
+    public String secured(){
+        return "Hello Secured!";
+    }
 
     @PostMapping("/add")
     public String add(@RequestBody User user){

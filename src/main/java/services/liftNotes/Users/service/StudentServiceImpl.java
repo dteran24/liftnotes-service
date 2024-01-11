@@ -18,6 +18,11 @@ public class StudentServiceImpl  implements UserService{
     }
 
     @Override
+    public User getUserByID(Integer userID) {
+        return  userRepository.findById(userID).orElse(null);
+    }
+
+    @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
