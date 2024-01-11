@@ -16,4 +16,9 @@ public class WorkoutServiceImpl implements WorkoutsService{
     public Workout saveWorkout(Workout workout) {
         return workoutRepository.save(workout);
     }
+
+    @Override
+    public Workout getWorkoutByID(Integer workoutID) {
+        return workoutRepository.findById(workoutID).orElse(null);
+    }
 }

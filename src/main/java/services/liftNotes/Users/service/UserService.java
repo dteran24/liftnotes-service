@@ -1,6 +1,6 @@
 package services.liftNotes.Users.service;
 
-import services.liftNotes.Users.models.User;
+import services.liftNotes.Users.controller.models.User;
 
 import java.util.List;
 

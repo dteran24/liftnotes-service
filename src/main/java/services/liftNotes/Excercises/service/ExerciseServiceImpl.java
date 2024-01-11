@@ -14,4 +14,9 @@ public class ExerciseServiceImpl implements ExerciseService{
     public Exercise saveExercise(Exercise exercise) {
         return exerciseRepository.save(exercise);
     }
+
+    @Override
+    public Exercise getExerciseByID(Integer exerciseID) {
+        return exerciseRepository.findById(exerciseID).orElse(null);
+    }
 }

@@ -3,7 +3,7 @@ package services.liftNotes.Workouts.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import services.liftNotes.Users.models.User;
+import services.liftNotes.Users.controller.models.User;
 
 
 
@@ -13,10 +13,11 @@ import services.liftNotes.Users.models.User;
 public class Workout {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "workout_id")
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     private String date;

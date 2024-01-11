@@ -2,7 +2,7 @@ package services.liftNotes.Users.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import services.liftNotes.Users.models.User;
+import services.liftNotes.Users.controller.models.User;
 import services.liftNotes.Users.service.UserService;
 
 import java.util.List;
@@ -15,10 +15,10 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    @GetMapping("/secured")
-    public String secured(){
-        return "Hello Secured!";
-    }
+//    @GetMapping("/secured")
+//    public String secured(){
+//        return "Hello Secured!";
+//    }
 
     @PostMapping("/add")
     public String add(@RequestBody User user){

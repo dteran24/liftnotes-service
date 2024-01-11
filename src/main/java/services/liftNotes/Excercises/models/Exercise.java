@@ -10,6 +10,7 @@ import lombok.Setter;
 public class Exercise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "exercise_id")
     private int id;
 
     private String name;
