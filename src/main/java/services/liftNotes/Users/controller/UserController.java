@@ -6,7 +6,7 @@ import services.liftNotes.Users.models.User;
 import services.liftNotes.Users.service.UserService;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @CrossOrigin
 @RestController
