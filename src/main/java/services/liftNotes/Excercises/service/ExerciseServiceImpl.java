@@ -16,6 +16,11 @@ public class ExerciseServiceImpl implements ExerciseService{
     }
 
     @Override
+    public void deleteExercise(Integer exerciseID) {
+        exerciseRepository.deleteById(exerciseID);
+    }
+
+    @Override
     public Exercise getExerciseByID(Integer exerciseID) {
         return exerciseRepository.findById(exerciseID).orElse(null);
     }

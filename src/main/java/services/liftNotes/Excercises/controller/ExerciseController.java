@@ -17,4 +17,9 @@ public class ExerciseController {
         exerciseService.saveExercise(exercise);
         return "Exercise Added!";
     }
+    @DeleteMapping("/delete")
+    public String removeExercise(@RequestParam int exerciseID){
+        exerciseService.deleteExercise(exerciseID);
+        return "Exercise Deleted!";
+    }
 }

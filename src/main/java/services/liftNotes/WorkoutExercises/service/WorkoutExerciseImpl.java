@@ -15,4 +15,9 @@ public class WorkoutExerciseImpl implements WorkoutExerciseService{
     public WorkoutExercise saveWorkoutExercise(WorkoutExercise workoutExercise) {
         return workoutExerciseRepo.save(workoutExercise);
     }
+
+    @Override
+    public void removeWorkoutExercise(Integer exerciseID) {
+        workoutExerciseRepo.deleteById(exerciseID);
+    }
 }

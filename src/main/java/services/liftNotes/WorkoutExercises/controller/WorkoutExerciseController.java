@@ -28,6 +28,11 @@ public class WorkoutExerciseController {
         workoutExercise.setExercise(exercise);
 
         workoutExerciseService.saveWorkoutExercise(workoutExercise);
-        return "Workout exercise Added!";
+        return "Workout exercise added!";
+    }
+    @DeleteMapping("/delete")
+    public String removeWorkoutExercise(@RequestParam int workoutExerciseID){
+        workoutExerciseService.removeWorkoutExercise(workoutExerciseID);
+        return "Workout exercise deleted!";
     }
 }
