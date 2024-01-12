@@ -22,4 +22,9 @@ public class ExerciseController {
         exerciseService.deleteExercise(exerciseID);
         return "Exercise Deleted!";
     }
+    @GetMapping("/all")
+    public String getAllExercise(){
+        exerciseService.getAllExercise();
+        return "Request Completed!";
+    }
 }

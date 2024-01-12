@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import services.liftNotes.Excercises.models.Exercise;
 import services.liftNotes.Excercises.repository.ExerciseRepository;
 
+import java.util.List;
+
 @Service
 public class ExerciseServiceImpl implements ExerciseService{
     @Autowired
@@ -23,5 +25,10 @@ public class ExerciseServiceImpl implements ExerciseService{
     @Override
     public Exercise getExerciseByID(Integer exerciseID) {
         return exerciseRepository.findById(exerciseID).orElse(null);
+    }
+
+    @Override
+    public List<Exercise> getAllExercise() {
+        return exerciseRepository.findAll();
     }
 }
