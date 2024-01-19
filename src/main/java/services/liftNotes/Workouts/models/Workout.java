@@ -3,9 +3,7 @@ package services.liftNotes.Workouts.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import services.liftNotes.Users.controller.models.User;
-
-
+import services.liftNotes.config.models.ApplicationUser;
 
 @Getter
 @Setter
@@ -18,7 +16,7 @@ public class Workout {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private ApplicationUser user;
 
     private String date;
     private String duration;

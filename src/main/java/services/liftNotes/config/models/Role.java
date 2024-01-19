@@ -1,20 +1,33 @@
 package services.liftNotes.config.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
 
 @Getter
 @Setter
+@AllArgsConstructor
 @Entity
-public class Role {
+@Table(name = "roles")
+public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String name;
+    @Column(name = "role_id")
+    private int roleId;
 
-    public Role(){};
+    private String authority;
+
+    public Role(){
+        super();
+    }
+    public Role(String authority){
+        this.authority = authority;
+    }
+
+    @Override
+    public String getAuthority() {
+        return this.authority;
+    }
 }

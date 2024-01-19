@@ -12,7 +12,7 @@ public class Exercise {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "exercise_id")
     private int id;
-
+    @Column(unique = true)
     private String name;
     private String description;
     public Exercise(){};
