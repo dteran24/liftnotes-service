@@ -1,6 +1,9 @@
 package services.liftNotes.Workouts.controller;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import services.liftNotes.Utils.GetDate;
 import services.liftNotes.Workouts.models.Workout;
@@ -18,20 +21,22 @@ public class WorkoutsController {
     @Autowired
     private UserService userService;
 
-//    @PostMapping("/add")
-//    public String addWorkout(@AuthenticationPrincipal ApplicationUser authenticatedUser, @RequestBody Workout workout) {
-//        // Check if the user with the specified ID exists
-//        ApplicationUser user = userService.loadUserByUsername(authenticatedUser.getUsername());
-//
-//        if (user != null) {
-//            workout.setUser(user);
-//            workout.setDate(GetDate.currentDate());
-//            workoutService.saveWorkout(workout);
-//            return "Workout Added!";
-//        } else {
-//            return "User not found for ID: " + authenticatedUser.getId();
-//        }
-//    }
+    @PostMapping("/add")
+    public String addWorkout(@RequestBody Workout workout) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        ApplicationUser user = userService.loadUserByUsername(username);
+
+
+        if (user != null) {
+            workout.setUser(user);
+            workout.setDate(GetDate.currentDate());
+            workoutService.saveWorkout(workout);
+            return "Workout Added!";
+        } else {
+            return "User not found for ID: " + username;
+        }
+    }
 
 }
 

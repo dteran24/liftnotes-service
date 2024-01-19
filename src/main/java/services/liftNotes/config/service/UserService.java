@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import services.liftNotes.config.models.ApplicationUser;
 import services.liftNotes.config.repository.UserRepository;
 
 @Service
@@ -16,7 +17,7 @@ public class UserService implements UserDetailsService {
     UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public ApplicationUser loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println("in details service");
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Username not found"));
 
