@@ -1,30 +1,45 @@
 package services.liftNotes.Excercises.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import services.liftNotes.Excercises.models.Exercise;
 import services.liftNotes.Excercises.service.ExerciseService;
+import services.liftNotes.config.exceptions.ExerciseAlreadyExists;
+
+import java.util.List;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/exercise")
 public class ExerciseController {
+
+    private final ExerciseService exerciseService;
     @Autowired
-    ExerciseService exerciseService;
+    public ExerciseController(ExerciseService exerciseService){
+        super();
+        this.exerciseService = exerciseService;
+    }
 
     @PostMapping("/add")
-    public String addExercise(@RequestBody Exercise exercise){
-        exerciseService.saveExercise(exercise);
-        return "Exercise Added!";
+    public ResponseEntity<String> addExercise(@RequestBody Exercise exercise){
+        try {
+            exerciseService.saveExercise(exercise);
+            return new ResponseEntity<>("Exercise Created!", HttpStatus.CREATED);
+        }catch (ExerciseAlreadyExists e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+
     }
     @DeleteMapping("/delete")
-    public String removeExercise(@RequestParam int exerciseID){
+    public ResponseEntity<String> removeExercise(@RequestParam int exerciseID){
         exerciseService.deleteExercise(exerciseID);
-        return "Exercise Deleted!";
+        return new ResponseEntity<>("Exercise Deleted!", HttpStatus.OK);
     }
     @GetMapping("/all")
-    public String getAllExercise(){
-        exerciseService.getAllExercise();
-        return "Request Completed!";
+    public ResponseEntity<Object> getAllExercise(){
+        List<Exercise> allExercises = exerciseService.getAllExercise();
+        return new ResponseEntity<>(allExercises,HttpStatus.OK);
     }
 }

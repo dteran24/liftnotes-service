@@ -9,8 +9,14 @@ import services.liftNotes.Workouts.repository.WorkoutRepository;
 @Service
 public class WorkoutServiceImpl implements WorkoutsService{
 
+    private final WorkoutRepository workoutRepository;
+
     @Autowired
-    private WorkoutRepository workoutRepository;
+    WorkoutServiceImpl(WorkoutRepository workoutRepository){
+        super();
+        this.workoutRepository = workoutRepository;
+
+    }
 
     @Override
     public Workout saveWorkout(Workout workout) {

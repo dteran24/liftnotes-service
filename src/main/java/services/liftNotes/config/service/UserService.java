@@ -11,14 +11,16 @@ import services.liftNotes.config.repository.UserRepository;
 
 @Service
 public class UserService implements UserDetailsService {
+    public UserRepository userRepository;
     @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    UserRepository userRepository;
+    public UserService(UserRepository userRepository){
+        super();
+        this.userRepository = userRepository;
+    }
+
 
     @Override
     public ApplicationUser loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println("in details service");
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Username not found"));
 
     }

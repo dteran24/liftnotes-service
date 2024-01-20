@@ -1,6 +1,8 @@
 package services.liftNotes.WorkoutExercises.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import services.liftNotes.Excercises.models.Exercise;
 import services.liftNotes.Excercises.service.ExerciseService;
@@ -13,26 +15,32 @@ import services.liftNotes.Workouts.service.WorkoutsService;
 @RestController
 @RequestMapping("/workoutExercise")
 public class WorkoutExerciseController {
+
+    private final WorkoutExerciseService workoutExerciseService;
+    private final WorkoutsService workoutsService;
+    private final ExerciseService exerciseService;
+
     @Autowired
-    private WorkoutExerciseService workoutExerciseService;
-    @Autowired
-    private WorkoutsService workoutsService;
-    @Autowired
-    private ExerciseService exerciseService;
+    public WorkoutExerciseController(WorkoutsService workoutsService, WorkoutExerciseService workoutExerciseService, ExerciseService exerciseService){
+        super();
+        this.workoutsService = workoutsService;
+        this.workoutExerciseService = workoutExerciseService;
+        this.exerciseService =exerciseService;
+    }
 
     @PostMapping("/add")
-    public String addWorkoutExercise(@RequestParam int workoutID, @RequestParam int exerciseID, @RequestBody WorkoutExercise workoutExercise){
+    public ResponseEntity<String> addWorkoutExercise(@RequestParam int workoutID, @RequestParam int exerciseID, @RequestBody WorkoutExercise workoutExercise){
         Workout workout = workoutsService.getWorkoutByID(workoutID);
         Exercise exercise = exerciseService.getExerciseByID(exerciseID);
         workoutExercise.setWorkout(workout);
         workoutExercise.setExercise(exercise);
 
         workoutExerciseService.saveWorkoutExercise(workoutExercise);
-        return "Workout exercise added!";
+        return new ResponseEntity<>("Workout exercise added!", HttpStatus.CREATED);
     }
     @DeleteMapping("/delete")
-    public String removeWorkoutExercise(@RequestParam int workoutExerciseID){
+    public ResponseEntity<String> removeWorkoutExercise(@RequestParam int workoutExerciseID){
         workoutExerciseService.removeWorkoutExercise(workoutExerciseID);
-        return "Workout exercise deleted!";
+        return new ResponseEntity<>("Workout exercise deleted!", HttpStatus.OK) ;
     }
 }
