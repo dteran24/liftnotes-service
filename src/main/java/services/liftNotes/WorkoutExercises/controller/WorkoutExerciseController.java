@@ -30,13 +30,18 @@ public class WorkoutExerciseController {
 
     @PostMapping("/add")
     public ResponseEntity<String> addWorkoutExercise(@RequestParam int workoutID, @RequestParam int exerciseID, @RequestBody WorkoutExercise workoutExercise){
-        Workout workout = workoutsService.getWorkoutByID(workoutID);
-        Exercise exercise = exerciseService.getExerciseByID(exerciseID);
-        workoutExercise.setWorkout(workout);
-        workoutExercise.setExercise(exercise);
+        try {
+            Workout workout = workoutsService.getWorkoutByID(workoutID);
+            Exercise exercise = exerciseService.getExerciseByID(exerciseID);
+            workoutExercise.setWorkout(workout);
+            workoutExercise.setExercise(exercise);
 
-        workoutExerciseService.saveWorkoutExercise(workoutExercise);
-        return new ResponseEntity<>("Workout exercise added!", HttpStatus.CREATED);
+            workoutExerciseService.saveWorkoutExercise(workoutExercise);
+            return new ResponseEntity<>("Workout exercise added!", HttpStatus.CREATED);
+        }catch (Exception e){
+            return new ResponseEntity<>("Something went wrong!", HttpStatus.BAD_REQUEST);
+        }
+
     }
     @DeleteMapping("/delete")
     public ResponseEntity<String> removeWorkoutExercise(@RequestParam int workoutExerciseID){

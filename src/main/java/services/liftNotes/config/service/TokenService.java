@@ -14,11 +14,13 @@ import java.util.stream.Collectors;
 
 @Service
 public class TokenService {
-    @Autowired
-    private JwtEncoder jwtEncoder;
+    private final JwtEncoder jwtEncoder;
 
     @Autowired
-    private JwtDecoder jwtDecoder;
+    public TokenService(JwtEncoder jwtEncoder){
+        super();
+        this.jwtEncoder = jwtEncoder;
+    }
 
     public String generateJwt(Authentication auth){
         Instant now = Instant.now();

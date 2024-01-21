@@ -50,7 +50,9 @@ public class AuthController {
             return new ResponseEntity<>( response, HttpStatus.OK);
 
         } catch (Exception e) {
-            return new ResponseEntity<>("Username or Password is incorrect!", HttpStatus.CONFLICT);
+            Map<String, String> response = new HashMap<>();
+            response.put("error","Username or Password is incorrect!");
+            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
         }
     }
 }

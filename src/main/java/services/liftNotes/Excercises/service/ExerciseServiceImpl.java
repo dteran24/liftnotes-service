@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import services.liftNotes.Excercises.models.Exercise;
 import services.liftNotes.Excercises.repository.ExerciseRepository;
 import services.liftNotes.config.exceptions.ExerciseAlreadyExists;
+import services.liftNotes.config.exceptions.ExerciseDoesNotExist;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,13 +33,24 @@ public class ExerciseServiceImpl implements ExerciseService{
     }
 
     @Override
-    public void deleteExercise(Integer exerciseID) {
-        exerciseRepository.deleteById(exerciseID);
+    public void deleteExercise(Integer exerciseID) throws ExerciseDoesNotExist {
+        Optional<Exercise> exercise = exerciseRepository.findById(exerciseID);
+        if (exercise.isPresent()){
+            exerciseRepository.deleteById(exerciseID);
+        }else{
+            throw new ExerciseDoesNotExist("Exercise does not exist! :" + exerciseID);
+        }
+
     }
 
     @Override
-    public Exercise getExerciseByID(Integer exerciseID) {
-        return exerciseRepository.findById(exerciseID).orElse(null);
+    public Exercise getExerciseByID(Integer exerciseID) throws ExerciseDoesNotExist {
+        Optional<Exercise> exercise = exerciseRepository.findById(exerciseID);
+        if (exercise.isPresent()){
+            return exercise.get();
+        }else{
+            throw new ExerciseDoesNotExist("Exercise does not exist! id:" + exerciseID);
+        }
     }
 
     @Override

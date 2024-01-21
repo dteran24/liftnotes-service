@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import services.liftNotes.Excercises.models.Exercise;
 import services.liftNotes.Excercises.service.ExerciseService;
 import services.liftNotes.config.exceptions.ExerciseAlreadyExists;
+import services.liftNotes.config.exceptions.ExerciseDoesNotExist;
 
 import java.util.List;
 
@@ -33,13 +34,17 @@ public class ExerciseController {
 
     }
     @DeleteMapping("/delete")
-    public ResponseEntity<String> removeExercise(@RequestParam int exerciseID){
-        exerciseService.deleteExercise(exerciseID);
-        return new ResponseEntity<>("Exercise Deleted!", HttpStatus.OK);
+    public ResponseEntity<String> removeExercise(@RequestParam int exerciseID) {
+        try{
+            exerciseService.deleteExercise(exerciseID);
+            return new ResponseEntity<>("Exercise Deleted!", HttpStatus.OK);
+        }catch (ExerciseDoesNotExist e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
     }
     @GetMapping("/all")
     public ResponseEntity<Object> getAllExercise(){
         List<Exercise> allExercises = exerciseService.getAllExercise();
-        return new ResponseEntity<>(allExercises,HttpStatus.OK);
+        return new ResponseEntity<>(allExercises, HttpStatus.OK);
     }
 }
