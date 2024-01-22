@@ -3,13 +3,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import services.liftNotes.Utils.GetDate;
 import services.liftNotes.Workouts.models.Workout;
 import services.liftNotes.Workouts.service.WorkoutsService;
+import services.liftNotes.config.exceptions.WorkoutDoesNotExist;
 import services.liftNotes.config.models.ApplicationUser;
 import services.liftNotes.config.service.UserService;
 
@@ -45,6 +44,17 @@ public class WorkoutsController {
         } else {
             return new ResponseEntity<>("User not found for ID: " + username, HttpStatus.NOT_FOUND);
         }
+    }
+    @DeleteMapping("/delete/{workoutID}")
+    public ResponseEntity<String> deleteWorkout(@PathVariable int workoutID){
+        try{
+            workoutService.deleteWorkout(workoutID);
+            return new ResponseEntity<>("Workout Deleted!", HttpStatus.OK);
+        } catch (WorkoutDoesNotExist e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+
+
     }
 
 }

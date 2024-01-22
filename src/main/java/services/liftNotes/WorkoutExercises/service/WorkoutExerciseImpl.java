@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import services.liftNotes.WorkoutExercises.model.WorkoutExercise;
 import services.liftNotes.WorkoutExercises.repository.WorkoutExerciseRepo;
+import services.liftNotes.config.exceptions.WorkoutExerciseDoesNotExist;
+
+import java.util.Optional;
 
 @Service
 public class WorkoutExerciseImpl implements WorkoutExerciseService{
@@ -12,12 +15,17 @@ public class WorkoutExerciseImpl implements WorkoutExerciseService{
     private WorkoutExerciseRepo workoutExerciseRepo;
 
     @Override
-    public WorkoutExercise saveWorkoutExercise(WorkoutExercise workoutExercise) {
-        return workoutExerciseRepo.save(workoutExercise);
+    public void saveWorkoutExercise(WorkoutExercise workoutExercise) {
+        workoutExerciseRepo.save(workoutExercise);
     }
 
     @Override
-    public void removeWorkoutExercise(Integer exerciseID) {
-        workoutExerciseRepo.deleteById(exerciseID);
+    public void removeWorkoutExercise(Integer exerciseID) throws WorkoutExerciseDoesNotExist {
+        Optional<WorkoutExercise> workoutExercise = workoutExerciseRepo.findById(exerciseID);
+            if(workoutExercise.isPresent()){
+                workoutExerciseRepo.deleteById(exerciseID);
+            }else{
+                throw new WorkoutExerciseDoesNotExist("Workout exercise does not exist  ID: " + exerciseID);
+            }
     }
 }

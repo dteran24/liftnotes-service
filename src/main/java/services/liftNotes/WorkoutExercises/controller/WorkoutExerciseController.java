@@ -10,6 +10,7 @@ import services.liftNotes.WorkoutExercises.model.WorkoutExercise;
 import services.liftNotes.WorkoutExercises.service.WorkoutExerciseService;
 import services.liftNotes.Workouts.models.Workout;
 import services.liftNotes.Workouts.service.WorkoutsService;
+import services.liftNotes.config.exceptions.WorkoutExerciseDoesNotExist;
 
 @CrossOrigin
 @RestController
@@ -44,8 +45,14 @@ public class WorkoutExerciseController {
 
     }
     @DeleteMapping("/delete")
-    public ResponseEntity<String> removeWorkoutExercise(@RequestParam int workoutExerciseID){
-        workoutExerciseService.removeWorkoutExercise(workoutExerciseID);
-        return new ResponseEntity<>("Workout exercise deleted!", HttpStatus.OK) ;
+    public ResponseEntity<String> removeWorkoutExercise(@RequestParam int workoutExerciseID) throws WorkoutExerciseDoesNotExist {
+        try {
+            workoutExerciseService.removeWorkoutExercise(workoutExerciseID);
+            return new ResponseEntity<>("Workout exercise deleted!", HttpStatus.OK) ;
+        }catch (WorkoutExerciseDoesNotExist e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT) ;
+        }
+
+
     }
 }

@@ -33,8 +33,8 @@ public class ExerciseController {
         }
 
     }
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> removeExercise(@RequestParam int exerciseID) {
+    @DeleteMapping("/delete/{exerciseID}")
+    public ResponseEntity<String> removeExercise(@PathVariable int exerciseID) {
         try{
             exerciseService.deleteExercise(exerciseID);
             return new ResponseEntity<>("Exercise Deleted!", HttpStatus.OK);
@@ -45,6 +45,10 @@ public class ExerciseController {
     @GetMapping("/all")
     public ResponseEntity<Object> getAllExercise(){
         List<Exercise> allExercises = exerciseService.getAllExercise();
+
+        if (allExercises.isEmpty()){
+            return new ResponseEntity<>("There are no exercises at the moment!", HttpStatus.OK);
+        }
         return new ResponseEntity<>(allExercises, HttpStatus.OK);
     }
 }

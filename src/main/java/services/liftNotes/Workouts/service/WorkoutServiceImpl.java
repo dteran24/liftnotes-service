@@ -3,7 +3,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import services.liftNotes.Workouts.models.Workout;
 import services.liftNotes.Workouts.repository.WorkoutRepository;
+import services.liftNotes.config.exceptions.WorkoutDoesNotExist;
 
+import javax.swing.text.html.Option;
+import java.util.Optional;
 
 
 @Service
@@ -19,12 +22,23 @@ public class WorkoutServiceImpl implements WorkoutsService{
     }
 
     @Override
-    public Workout saveWorkout(Workout workout) {
-        return workoutRepository.save(workout);
+    public void saveWorkout(Workout workout) {
+        workoutRepository.save(workout);
     }
 
     @Override
-    public Workout getWorkoutByID(Integer workoutID) {
-        return workoutRepository.findById(workoutID).orElse(null);
+    public void deleteWorkout(int workoutID) throws WorkoutDoesNotExist {
+        Optional<Workout> workout = workoutRepository.findById(workoutID);
+        if(workout.isPresent()){
+            workoutRepository.delete(workout.get());
+        }else{
+            throw new WorkoutDoesNotExist("Workout does not exist with ID: " + workoutID);
+        }
     }
+
+    @Override
+    public Workout getWorkoutByID(int workoutID) throws WorkoutDoesNotExist {
+        return workoutRepository.findById(workoutID).orElseThrow(() -> new WorkoutDoesNotExist("Workout does not exist with ID: " + workoutID));
+    }
+
 }
