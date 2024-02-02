@@ -71,7 +71,7 @@ public class AuthService {
                 return new LoginResponseDTO(user.get(), token);
 
             } catch (AuthenticationException e) {
-                return new LoginResponseDTO(null, "");
+                throw new AccountDoesNotExist();
             }
         }else{
             throw new AccountDoesNotExist();

@@ -11,9 +11,10 @@ import services.liftNotes.config.exceptions.ExerciseDoesNotExist;
 
 import java.util.List;
 
-@CrossOrigin
+
 @RestController
 @RequestMapping("/exercise")
+@CrossOrigin("*")
 public class ExerciseController {
 
     private final ExerciseService exerciseService;

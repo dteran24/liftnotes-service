@@ -12,6 +12,7 @@ public class Exercise {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "exercise_id")
     private int id;
+    private String genre;
     @Column(unique = true)
     private String name;
     private String description;
