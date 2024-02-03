@@ -12,6 +12,9 @@ import services.liftNotes.config.exceptions.WorkoutDoesNotExist;
 import services.liftNotes.config.models.ApplicationUser;
 import services.liftNotes.config.service.UserService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 @CrossOrigin
 @RestController
@@ -27,6 +30,20 @@ public class WorkoutsController {
         this.workoutService = workoutsService;
         this.userService = userService;
 
+
+    }
+
+
+    @GetMapping("/workout/{id}")
+    public ResponseEntity<Object> getWorkoutById(@PathVariable int workoutID){
+        try{
+            Workout workout = workoutService.getWorkoutByID(workoutID);
+
+            return new ResponseEntity<>(workout, HttpStatus.OK);
+        } catch (WorkoutDoesNotExist e) {
+
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
 
     }
 

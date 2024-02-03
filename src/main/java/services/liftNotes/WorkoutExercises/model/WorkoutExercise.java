@@ -14,9 +14,9 @@ public class WorkoutExercise {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "workout_id")
-    private Workout workout;
+//    @ManyToOne
+//    @JoinColumn(name = "workout_id")
+//    private Workout workout;
 
     @ManyToOne
     @JoinColumn(name = "exercise_id")

@@ -12,9 +12,12 @@ import services.liftNotes.Workouts.models.Workout;
 import services.liftNotes.Workouts.service.WorkoutsService;
 import services.liftNotes.config.exceptions.WorkoutExerciseDoesNotExist;
 
-@CrossOrigin
+import java.util.List;
+
+
 @RestController
 @RequestMapping("/workoutExercise")
+@CrossOrigin("*")
 public class WorkoutExerciseController {
 
     private final WorkoutExerciseService workoutExerciseService;
@@ -29,12 +32,14 @@ public class WorkoutExerciseController {
         this.exerciseService =exerciseService;
     }
 
+
+    //adding workout later on
     @PostMapping("/add")
-    public ResponseEntity<String> addWorkoutExercise(@RequestParam int workoutID, @RequestParam int exerciseID, @RequestBody WorkoutExercise workoutExercise){
+    public ResponseEntity<String> addWorkoutExercise(@RequestParam int exerciseID, @RequestBody WorkoutExercise workoutExercise){
         try {
-            Workout workout = workoutsService.getWorkoutByID(workoutID);
+//            Workout workout = workoutsService.getWorkoutByID(workoutID);
             Exercise exercise = exerciseService.getExerciseByID(exerciseID);
-            workoutExercise.setWorkout(workout);
+//            workoutExercise.setWorkout(workout);
             workoutExercise.setExercise(exercise);
 
             workoutExerciseService.saveWorkoutExercise(workoutExercise);
@@ -54,5 +59,11 @@ public class WorkoutExerciseController {
         }
 
 
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<Object> allWorkoutsAndExercise(){
+        List<WorkoutExercise> data =  workoutExerciseService.getAllWorkoutData();
+        return new ResponseEntity<>(data, HttpStatus.OK);
     }
 }

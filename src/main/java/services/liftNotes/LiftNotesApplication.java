@@ -5,6 +5,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import services.liftNotes.Excercises.models.Exercise;
+import services.liftNotes.Excercises.repository.ExerciseRepository;
 import services.liftNotes.config.models.ApplicationUser;
 import services.liftNotes.config.models.Role;
 import services.liftNotes.config.repository.RoleRepository;
@@ -19,7 +21,7 @@ public class LiftNotesApplication {
 		SpringApplication.run(LiftNotesApplication.class, args);
 	}
 	@Bean
-	CommandLineRunner run(RoleRepository roleRepository, UserRepository userRepository, PasswordEncoder passwordEncoder){
+	CommandLineRunner run(RoleRepository roleRepository, UserRepository userRepository, PasswordEncoder passwordEncoder, ExerciseRepository exerciseRepository){
 		return  args -> {
 			if(roleRepository.findByAuthority("ADMIN").isPresent())return;
 			Role adminRole = roleRepository.save(new Role("ADMIN"));
@@ -28,7 +30,6 @@ public class LiftNotesApplication {
 			roles.add(adminRole);
 			ApplicationUser admin = new ApplicationUser("admin", passwordEncoder.encode("password"),roles);
 			userRepository.save(admin);
-
 		};
 	}
 

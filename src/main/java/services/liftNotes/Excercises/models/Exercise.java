@@ -16,5 +16,6 @@ public class Exercise {
     @Column(unique = true)
     private String name;
     private String description;
+
     public Exercise(){};
 }

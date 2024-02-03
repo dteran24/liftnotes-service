@@ -6,6 +6,7 @@ import services.liftNotes.WorkoutExercises.model.WorkoutExercise;
 import services.liftNotes.WorkoutExercises.repository.WorkoutExerciseRepo;
 import services.liftNotes.config.exceptions.WorkoutExerciseDoesNotExist;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,5 +28,10 @@ public class WorkoutExerciseImpl implements WorkoutExerciseService{
             }else{
                 throw new WorkoutExerciseDoesNotExist("Workout exercise does not exist  ID: " + exerciseID);
             }
+    }
+
+    @Override
+    public List<WorkoutExercise> getAllWorkoutData() {
+        return workoutExerciseRepo.findAllWithExerciseAndWorkout();
     }
 }
