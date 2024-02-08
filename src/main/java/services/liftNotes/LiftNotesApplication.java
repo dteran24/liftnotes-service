@@ -30,6 +30,10 @@ public class LiftNotesApplication {
 			roles.add(adminRole);
 			ApplicationUser admin = new ApplicationUser("admin", passwordEncoder.encode("password"),roles);
 			userRepository.save(admin);
+			exerciseRepository.save(new Exercise(1,"Legs","Leg Press","Description about leg press"));
+			exerciseRepository.save(new Exercise(2,"Chest","Dumbbell Chest Press","Description about leg press"));
+			exerciseRepository.save(new Exercise(3,"Arms","Dumbbell Curls","Description about leg press"));
+			exerciseRepository.save(new Exercise(4,"Back","Pull Ups","Description about leg press"));
 		};
 	}
 

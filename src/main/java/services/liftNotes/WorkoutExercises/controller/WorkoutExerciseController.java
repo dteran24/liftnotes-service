@@ -17,7 +17,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/workoutExercise")
-@CrossOrigin("*")
 public class WorkoutExerciseController {
 
     private final WorkoutExerciseService workoutExerciseService;
@@ -35,10 +34,10 @@ public class WorkoutExerciseController {
 
     //adding workout later on
     @PostMapping("/add")
-    public ResponseEntity<String> addWorkoutExercise(@RequestParam int exerciseID, @RequestBody WorkoutExercise workoutExercise){
+    public ResponseEntity<String> addWorkoutExercise(@RequestParam int workoutExerciseID, @RequestBody WorkoutExercise workoutExercise){
         try {
 //            Workout workout = workoutsService.getWorkoutByID(workoutID);
-            Exercise exercise = exerciseService.getExerciseByID(exerciseID);
+            Exercise exercise = exerciseService.getExerciseByID(workoutExerciseID);
 //            workoutExercise.setWorkout(workout);
             workoutExercise.setExercise(exercise);
 
