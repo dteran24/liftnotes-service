@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import services.liftNotes.Excercises.models.Exercise;
 import services.liftNotes.Excercises.service.ExerciseService;
+import services.liftNotes.Utils.GetDate;
 import services.liftNotes.config.exceptions.ExerciseAlreadyExists;
 import services.liftNotes.config.exceptions.ExerciseDoesNotExist;
 
@@ -25,6 +26,7 @@ public class ExerciseController {
 
     @PostMapping("/add")
     public ResponseEntity<String> addExercise(@RequestBody Exercise exercise){
+
         try {
             exerciseService.saveExercise(exercise);
             return new ResponseEntity<>("Exercise Created!", HttpStatus.CREATED);

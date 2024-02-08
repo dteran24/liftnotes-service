@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import services.liftNotes.Excercises.models.Exercise;
 import services.liftNotes.Excercises.service.ExerciseService;
+import services.liftNotes.Utils.GetDate;
 import services.liftNotes.WorkoutExercises.model.WorkoutExercise;
 import services.liftNotes.WorkoutExercises.service.WorkoutExerciseService;
 import services.liftNotes.Workouts.models.Workout;
@@ -33,9 +34,10 @@ public class WorkoutExerciseController {
 
 
     //adding workout later on
-    @PostMapping("/add")
-    public ResponseEntity<String> addWorkoutExercise(@RequestParam int workoutExerciseID, @RequestBody WorkoutExercise workoutExercise){
+    @PostMapping("/add/{workoutExerciseID}")
+    public ResponseEntity<String> addWorkoutExercise(@PathVariable int workoutExerciseID, @RequestBody WorkoutExercise workoutExercise){
         try {
+            workoutExercise.setCreationDate(GetDate.currentDate());
 //            Workout workout = workoutsService.getWorkoutByID(workoutID);
             Exercise exercise = exerciseService.getExerciseByID(workoutExerciseID);
 //            workoutExercise.setWorkout(workout);
@@ -48,8 +50,8 @@ public class WorkoutExerciseController {
         }
 
     }
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> removeWorkoutExercise(@RequestParam int workoutExerciseID) throws WorkoutExerciseDoesNotExist {
+    @DeleteMapping("/delete/{workoutExerciseID}")
+    public ResponseEntity<String> removeWorkoutExercise(@PathVariable int workoutExerciseID) {
         try {
             workoutExerciseService.removeWorkoutExercise(workoutExerciseID);
             return new ResponseEntity<>("Workout exercise deleted!", HttpStatus.OK) ;
@@ -59,6 +61,17 @@ public class WorkoutExerciseController {
 
 
     }
+    @PatchMapping("/update/{workoutExerciseID}")
+    public ResponseEntity<String> updateWorkoutExercise(@PathVariable int workoutExerciseID, @RequestBody WorkoutExercise workoutExercise){
+        try{
+            workoutExerciseService.updateWorkoutExercise(workoutExerciseID, workoutExercise);
+            return new ResponseEntity<>("Workout updated!", HttpStatus.OK);
+        }catch (WorkoutExerciseDoesNotExist e){
+            return  new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+    }
+
+
 
     @GetMapping("/all")
     public ResponseEntity<Object> allWorkoutsAndExercise(){

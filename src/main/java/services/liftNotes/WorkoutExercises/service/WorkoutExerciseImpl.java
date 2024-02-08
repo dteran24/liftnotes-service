@@ -2,6 +2,7 @@ package services.liftNotes.WorkoutExercises.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import services.liftNotes.Utils.GetDate;
 import services.liftNotes.WorkoutExercises.model.WorkoutExercise;
 import services.liftNotes.WorkoutExercises.repository.WorkoutExerciseRepo;
 import services.liftNotes.config.exceptions.WorkoutExerciseDoesNotExist;
@@ -21,7 +22,22 @@ public class WorkoutExerciseImpl implements WorkoutExerciseService{
     }
 
     @Override
-    public void removeWorkoutExercise(Integer exerciseID) throws WorkoutExerciseDoesNotExist {
+    public void updateWorkoutExercise(int exerciseID, WorkoutExercise userWorkoutExercise) throws WorkoutExerciseDoesNotExist {
+        Optional<WorkoutExercise> workoutExerciseInRepo = workoutExerciseRepo.findById(exerciseID);
+        if(workoutExerciseInRepo.isPresent()){
+           WorkoutExercise w = workoutExerciseInRepo.get();
+           w.setReps(userWorkoutExercise.getReps());
+           w.setSets(userWorkoutExercise.getSets());
+           w.setWeight(userWorkoutExercise.getWeight());
+           w.setLastUpdated(GetDate.currentDate());
+           workoutExerciseRepo.save(w);
+
+        }else{
+            throw new WorkoutExerciseDoesNotExist("Workout exercise does not exist  ID: " + exerciseID);
+        }
+    }
+    @Override
+    public void removeWorkoutExercise(int exerciseID) throws WorkoutExerciseDoesNotExist {
         Optional<WorkoutExercise> workoutExercise = workoutExerciseRepo.findById(exerciseID);
             if(workoutExercise.isPresent()){
                 workoutExerciseRepo.deleteById(exerciseID);

@@ -7,7 +7,8 @@ import java.util.List;
 
 public interface WorkoutExerciseService {
   public void saveWorkoutExercise(WorkoutExercise workoutExercise);
-  public void removeWorkoutExercise(Integer exerciseID) throws WorkoutExerciseDoesNotExist;
+  public void removeWorkoutExercise(int exerciseID) throws WorkoutExerciseDoesNotExist;
+  public void updateWorkoutExercise(int exerciseID, WorkoutExercise workoutExercise) throws WorkoutExerciseDoesNotExist;
 
   public List<WorkoutExercise> getAllWorkoutData();
 }

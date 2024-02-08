@@ -6,6 +6,8 @@ import lombok.Setter;
 import services.liftNotes.Excercises.models.Exercise;
 import services.liftNotes.Workouts.models.Workout;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @Entity
@@ -25,4 +27,6 @@ public class WorkoutExercise {
     private int sets;
     private int reps;
     private int weight;
+    private String creationDate;
+    private String lastUpdated;
 }
