@@ -67,15 +67,30 @@ public class WorkoutExerciseController {
             workoutExerciseService.updateWorkoutExercise(workoutExerciseID, workoutExercise);
             return new ResponseEntity<>("Workout updated!", HttpStatus.OK);
         }catch (WorkoutExerciseDoesNotExist e){
-            return  new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
 
-
-
     @GetMapping("/all")
     public ResponseEntity<Object> allWorkoutsAndExercise(){
-        List<WorkoutExercise> data =  workoutExerciseService.getAllWorkoutData();
-        return new ResponseEntity<>(data, HttpStatus.OK);
+        try {
+            List<WorkoutExercise> data =  workoutExerciseService.getAllWorkoutData();
+            return new ResponseEntity<>(data, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+
     }
+
+    @GetMapping("/{workoutExerciseID}")
+    public ResponseEntity<Object> getWorkoutAndExerciseById(@PathVariable int workoutExerciseID) {
+        try{
+            WorkoutExercise data = workoutExerciseService.getAllWorkoutDataById(workoutExerciseID);
+            return new ResponseEntity<>(data, HttpStatus.OK);
+        }catch (WorkoutExerciseDoesNotExist e){
+            return  new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+        }
+
+
 }

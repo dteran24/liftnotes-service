@@ -50,4 +50,17 @@ public class WorkoutExerciseImpl implements WorkoutExerciseService{
     public List<WorkoutExercise> getAllWorkoutData() {
         return workoutExerciseRepo.findAllWithExerciseAndWorkout();
     }
+
+    @Override
+    public WorkoutExercise getAllWorkoutDataById(int exerciseID) throws WorkoutExerciseDoesNotExist {
+        Optional<WorkoutExercise> workoutExercise = workoutExerciseRepo.findById(exerciseID);
+        if(workoutExercise.isPresent()){
+            return workoutExerciseRepo.findAllWithExerciseAndWorkoutById(exerciseID);
+        }else{
+            throw new WorkoutExerciseDoesNotExist("Workout exercise does not exist  ID: " + exerciseID);
+        }
+
+    };
+
+
 }
