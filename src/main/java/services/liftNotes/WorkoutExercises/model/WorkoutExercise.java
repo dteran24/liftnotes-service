@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import services.liftNotes.Excercises.models.Exercise;
 import services.liftNotes.Workouts.models.Workout;
+import services.liftNotes.config.models.ApplicationUser;
 
 import java.util.Date;
 
@@ -19,6 +20,10 @@ public class WorkoutExercise {
 //    @ManyToOne
 //    @JoinColumn(name = "workout_id")
 //    private Workout workout;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private ApplicationUser user;
 
     @ManyToOne
     @JoinColumn(name = "exercise_id")

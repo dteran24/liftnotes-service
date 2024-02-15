@@ -9,6 +9,6 @@ public interface WorkoutExerciseService {
   public void saveWorkoutExercise(WorkoutExercise workoutExercise);
   public void removeWorkoutExercise(int exerciseID) throws WorkoutExerciseDoesNotExist;
   public void updateWorkoutExercise(int exerciseID, WorkoutExercise workoutExercise) throws WorkoutExerciseDoesNotExist;
-  public List<WorkoutExercise> getAllWorkoutData();
+  public List<WorkoutExercise> findAllWithExerciseAndWorkoutByUserId(int userID);
   public WorkoutExercise getAllWorkoutDataById(int id) throws WorkoutExerciseDoesNotExist;;
 }

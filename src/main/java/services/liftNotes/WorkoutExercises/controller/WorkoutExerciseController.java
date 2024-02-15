@@ -21,13 +21,13 @@ import java.util.List;
 public class WorkoutExerciseController {
 
     private final WorkoutExerciseService workoutExerciseService;
-    private final WorkoutsService workoutsService;
     private final ExerciseService exerciseService;
+    private final UserService userService;
 
     @Autowired
-    public WorkoutExerciseController(WorkoutsService workoutsService, WorkoutExerciseService workoutExerciseService, ExerciseService exerciseService){
+    public WorkoutExerciseController(UserService userService, WorkoutExerciseService workoutExerciseService, ExerciseService exerciseService){
         super();
-        this.workoutsService = workoutsService;
+        this.userService = userService;
         this.workoutExerciseService = workoutExerciseService;
         this.exerciseService =exerciseService;
     }
@@ -36,17 +36,26 @@ public class WorkoutExerciseController {
     //adding workout later on
     @PostMapping("/add/{workoutExerciseID}")
     public ResponseEntity<String> addWorkoutExercise(@PathVariable int workoutExerciseID, @RequestBody WorkoutExercise workoutExercise){
-        try {
-            workoutExercise.setCreationDate(GetDate.currentDate());
-//            Workout workout = workoutsService.getWorkoutByID(workoutID);
-            Exercise exercise = exerciseService.getExerciseByID(workoutExerciseID);
-//            workoutExercise.setWorkout(workout);
-            workoutExercise.setExercise(exercise);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        ApplicationUser user = userService.loadUserByUsername(username);
 
-            workoutExerciseService.saveWorkoutExercise(workoutExercise);
-            return new ResponseEntity<>("Workout exercise added!", HttpStatus.CREATED);
-        }catch (Exception e){
-            return new ResponseEntity<>("Something went wrong!", HttpStatus.BAD_REQUEST);
+        if(user != null) {
+            try {
+                workoutExercise.setUser(user);
+                workoutExercise.setCreationDate(GetDate.currentDate());
+//            Workout workout = workoutsService.getWorkoutByID(workoutID);
+                Exercise exercise = exerciseService.getExerciseByID(workoutExerciseID);
+//            workoutExercise.setWorkout(workout);
+                workoutExercise.setExercise(exercise);
+
+                workoutExerciseService.saveWorkoutExercise(workoutExercise);
+                return new ResponseEntity<>("Workout exercise added!", HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            }
+        }else{
+            return new ResponseEntity<>("No User found!", HttpStatus.UNAUTHORIZED);
         }
 
     }
@@ -73,8 +82,11 @@ public class WorkoutExerciseController {
 
     @GetMapping("/all")
     public ResponseEntity<Object> allWorkoutsAndExercise(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        ApplicationUser user = userService.loadUserByUsername(username);
         try {
-            List<WorkoutExercise> data =  workoutExerciseService.getAllWorkoutData();
+            List<WorkoutExercise> data =  workoutExerciseService.findAllWithExerciseAndWorkoutByUserId(user.getUserId());
             return new ResponseEntity<>(data, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);

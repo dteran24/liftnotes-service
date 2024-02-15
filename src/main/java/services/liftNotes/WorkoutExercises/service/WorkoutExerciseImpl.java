@@ -47,8 +47,8 @@ public class WorkoutExerciseImpl implements WorkoutExerciseService{
     }
 
     @Override
-    public List<WorkoutExercise> getAllWorkoutData() {
-        return workoutExerciseRepo.findAllWithExerciseAndWorkout();
+    public List<WorkoutExercise> findAllWithExerciseAndWorkoutByUserId(int userID) {
+        return workoutExerciseRepo.findAllWithExerciseAndWorkoutByUserId(userID);
     }
 
     @Override
