@@ -3,6 +3,8 @@ package services.liftNotes.WorkoutExercises.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import services.liftNotes.Excercises.models.Exercise;
 import services.liftNotes.Excercises.service.ExerciseService;
@@ -11,9 +13,13 @@ import services.liftNotes.WorkoutExercises.model.WorkoutExercise;
 import services.liftNotes.WorkoutExercises.service.WorkoutExerciseService;
 import services.liftNotes.Workouts.models.Workout;
 import services.liftNotes.Workouts.service.WorkoutsService;
+import services.liftNotes.config.exceptions.AccountDoesNotExist;
 import services.liftNotes.config.exceptions.WorkoutExerciseDoesNotExist;
+import services.liftNotes.config.models.ApplicationUser;
+import services.liftNotes.config.service.UserService;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 
 @RestController
@@ -85,13 +91,13 @@ public class WorkoutExerciseController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         ApplicationUser user = userService.loadUserByUsername(username);
+        System.out.println("Getting data from" + user.getUsername());
         try {
             List<WorkoutExercise> data =  workoutExerciseService.findAllWithExerciseAndWorkoutByUserId(user.getUserId());
             return new ResponseEntity<>(data, HttpStatus.OK);
-        }catch (Exception e){
+        }catch (AccountDoesNotExist e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
-
     }
 
     @GetMapping("/{workoutExerciseID}")
@@ -102,7 +108,7 @@ public class WorkoutExerciseController {
         }catch (WorkoutExerciseDoesNotExist e){
             return  new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
-        }
+    }
 
 
 }

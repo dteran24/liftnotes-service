@@ -3,12 +3,14 @@ package services.liftNotes.Excercises.models;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 public class Exercise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +20,4 @@ public class Exercise {
     @Column(unique = true)
     private String name;
     private String description;
-
-    public Exercise(){};
-
 }

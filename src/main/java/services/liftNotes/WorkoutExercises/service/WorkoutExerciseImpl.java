@@ -1,10 +1,14 @@
 package services.liftNotes.WorkoutExercises.service;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import services.liftNotes.Utils.GetDate;
+import services.liftNotes.WorkoutExerciseHistory.models.WorkoutExerciseHistory;
+import services.liftNotes.WorkoutExerciseHistory.repository.WorkoutExerciseHistoryRepo;
 import services.liftNotes.WorkoutExercises.model.WorkoutExercise;
 import services.liftNotes.WorkoutExercises.repository.WorkoutExerciseRepo;
+import services.liftNotes.config.exceptions.AccountDoesNotExist;
 import services.liftNotes.config.exceptions.WorkoutExerciseDoesNotExist;
 
 import java.util.List;
@@ -13,8 +17,15 @@ import java.util.Optional;
 @Service
 public class WorkoutExerciseImpl implements WorkoutExerciseService{
 
+
+    private final WorkoutExerciseRepo workoutExerciseRepo;
+    private final WorkoutExerciseHistoryRepo workoutExerciseHistoryRepo;
+
     @Autowired
-    private WorkoutExerciseRepo workoutExerciseRepo;
+    public WorkoutExerciseImpl(WorkoutExerciseRepo workoutExerciseRepo, WorkoutExerciseHistoryRepo workoutExerciseHistoryRepo){
+        this.workoutExerciseRepo = workoutExerciseRepo;
+        this.workoutExerciseHistoryRepo = workoutExerciseHistoryRepo;
+    }
 
     @Override
     public void saveWorkoutExercise(WorkoutExercise workoutExercise) {
@@ -22,15 +33,20 @@ public class WorkoutExerciseImpl implements WorkoutExerciseService{
     }
 
     @Override
+    @Transactional
     public void updateWorkoutExercise(int exerciseID, WorkoutExercise userWorkoutExercise) throws WorkoutExerciseDoesNotExist {
         Optional<WorkoutExercise> workoutExerciseInRepo = workoutExerciseRepo.findById(exerciseID);
+
         if(workoutExerciseInRepo.isPresent()){
-           WorkoutExercise w = workoutExerciseInRepo.get();
-           w.setReps(userWorkoutExercise.getReps());
-           w.setSets(userWorkoutExercise.getSets());
-           w.setWeight(userWorkoutExercise.getWeight());
-           w.setLastUpdated(GetDate.currentDate());
-           workoutExerciseRepo.save(w);
+           WorkoutExercise originalWorkoutExercise = workoutExerciseInRepo.get();
+           WorkoutExerciseHistory historyEntry = new WorkoutExerciseHistory(originalWorkoutExercise.getId(),originalWorkoutExercise ,originalWorkoutExercise.getSets(), originalWorkoutExercise.getReps(), originalWorkoutExercise.getWeight(),originalWorkoutExercise .getCreationDate());
+
+            originalWorkoutExercise.setReps(userWorkoutExercise.getReps());
+            originalWorkoutExercise.setSets(userWorkoutExercise.getSets());
+            originalWorkoutExercise.setWeight(userWorkoutExercise.getWeight());
+            originalWorkoutExercise.setLastUpdated(GetDate.currentDate());
+            workoutExerciseHistoryRepo.save(historyEntry);
+            workoutExerciseRepo.save(originalWorkoutExercise );
 
         }else{
             throw new WorkoutExerciseDoesNotExist("Workout exercise does not exist  ID: " + exerciseID);

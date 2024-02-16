@@ -61,6 +61,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests( auth -> {
                     auth.requestMatchers(HttpMethod.OPTIONS,"/exercise/**").permitAll();
                     auth.requestMatchers(HttpMethod.OPTIONS,"/workoutExercise/**").permitAll();
+                    auth.requestMatchers(HttpMethod.OPTIONS,"/history/**").permitAll();
                     auth.requestMatchers("/auth/**").permitAll();
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
                     auth.requestMatchers("/users/**").hasAnyRole("ADMIN", "USER");
