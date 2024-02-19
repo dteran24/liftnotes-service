@@ -39,14 +39,21 @@ public class WorkoutExerciseImpl implements WorkoutExerciseService{
 
         if(workoutExerciseInRepo.isPresent()){
            WorkoutExercise originalWorkoutExercise = workoutExerciseInRepo.get();
-           WorkoutExerciseHistory historyEntry = new WorkoutExerciseHistory(originalWorkoutExercise.getId(),originalWorkoutExercise ,originalWorkoutExercise.getSets(), originalWorkoutExercise.getReps(), originalWorkoutExercise.getWeight(),originalWorkoutExercise .getCreationDate());
+
+           String dateForHistory;
+           if(originalWorkoutExercise.getLastUpdated().equals("")){
+               dateForHistory = originalWorkoutExercise.getCreationDate();
+           }else{
+               dateForHistory = originalWorkoutExercise.getLastUpdated();
+           }
+           WorkoutExerciseHistory historyEntry = new WorkoutExerciseHistory(originalWorkoutExercise.getId(),originalWorkoutExercise ,originalWorkoutExercise.getSets(), originalWorkoutExercise.getReps(), originalWorkoutExercise.getWeight(), dateForHistory);
 
             originalWorkoutExercise.setReps(userWorkoutExercise.getReps());
             originalWorkoutExercise.setSets(userWorkoutExercise.getSets());
             originalWorkoutExercise.setWeight(userWorkoutExercise.getWeight());
             originalWorkoutExercise.setLastUpdated(GetDate.currentDate());
             workoutExerciseHistoryRepo.save(historyEntry);
-            workoutExerciseRepo.save(originalWorkoutExercise );
+            workoutExerciseRepo.save(originalWorkoutExercise);
 
         }else{
             throw new WorkoutExerciseDoesNotExist("Workout exercise does not exist  ID: " + exerciseID);
