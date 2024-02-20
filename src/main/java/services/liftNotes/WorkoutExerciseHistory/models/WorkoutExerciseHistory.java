@@ -28,4 +28,12 @@ public class WorkoutExerciseHistory {
     private int weight;
 
     private String creationDate;
+
+    public WorkoutExerciseHistory(WorkoutExercise workoutExercise, int sets, int reps, int weight, String creationDate) {
+        this.workoutExercise = workoutExercise;
+        this.sets = sets;
+        this.reps = reps;
+        this.weight = weight;
+        this.creationDate = creationDate;
+    }
 }

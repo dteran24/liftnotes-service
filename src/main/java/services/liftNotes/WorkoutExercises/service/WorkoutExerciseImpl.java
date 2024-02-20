@@ -46,7 +46,7 @@ public class WorkoutExerciseImpl implements WorkoutExerciseService{
            }else{
                dateForHistory = originalWorkoutExercise.getLastUpdated();
            }
-           WorkoutExerciseHistory historyEntry = new WorkoutExerciseHistory(originalWorkoutExercise.getId(),originalWorkoutExercise ,originalWorkoutExercise.getSets(), originalWorkoutExercise.getReps(), originalWorkoutExercise.getWeight(), dateForHistory);
+           WorkoutExerciseHistory historyEntry = new WorkoutExerciseHistory(originalWorkoutExercise ,originalWorkoutExercise.getSets(), originalWorkoutExercise.getReps(), originalWorkoutExercise.getWeight(), dateForHistory);
 
             originalWorkoutExercise.setReps(userWorkoutExercise.getReps());
             originalWorkoutExercise.setSets(userWorkoutExercise.getSets());
