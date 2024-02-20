@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface WorkoutExerciseRepo extends JpaRepository<WorkoutExercise, Integer> {
-    @Query("SELECT we FROM WorkoutExercise we JOIN FETCH we.exercise WHERE we.user.id = :userId")
+    @Query("SELECT we FROM WorkoutExercise we JOIN FETCH we.exercise WHERE we.user.id = :userId ORDER BY we.id DESC")
     List<WorkoutExercise> findAllWithExerciseAndWorkoutByUserId(@Param("userId") int userId);
 
     @Query("SELECT we FROM WorkoutExercise we JOIN FETCH we.exercise WHERE we.id = :id")
