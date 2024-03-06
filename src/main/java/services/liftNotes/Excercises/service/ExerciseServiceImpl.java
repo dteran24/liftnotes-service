@@ -7,8 +7,7 @@ import services.liftNotes.Excercises.repository.ExerciseRepository;
 import services.liftNotes.config.exceptions.ExerciseAlreadyExists;
 import services.liftNotes.config.exceptions.ExerciseDoesNotExist;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ExerciseServiceImpl implements ExerciseService{
@@ -55,6 +54,9 @@ public class ExerciseServiceImpl implements ExerciseService{
 
     @Override
     public List<Exercise> getAllExercise() {
-        return exerciseRepository.findAll();
+        List<Exercise> exerciseList = exerciseRepository.findAll();
+        exerciseList.sort(Comparator.comparing(Exercise::getName));
+
+        return exerciseList;
     }
 }
