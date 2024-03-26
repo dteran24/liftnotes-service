@@ -24,11 +24,17 @@ public class LiftNotesApplication {
 	CommandLineRunner run(RoleRepository roleRepository, UserRepository userRepository, PasswordEncoder passwordEncoder, ExerciseRepository exerciseRepository){
 		return  args -> {
 			if(roleRepository.findByAuthority("ADMIN").isPresent())return;
-			Role adminRole = roleRepository.save(new Role("ADMIN"));
 			roleRepository.save(new Role("USER"));
+			Role adminRole = roleRepository.save(new Role("ADMIN"));
+			Role userRole = roleRepository.findByAuthority("USER").get();
+
 			Set<Role> roles = new HashSet<>();
 			roles.add(adminRole);
+			Set<Role> demoRole = new HashSet<>();
+			demoRole.add(userRole);
+
 			ApplicationUser admin = new ApplicationUser("admin", passwordEncoder.encode("password"),roles);
+			ApplicationUser demoUser = new ApplicationUser("demo", passwordEncoder.encode("password"), demoRole);
 			userRepository.save(admin);
 			exerciseRepository.save(new Exercise(1, "Legs", "Leg Press", "The leg press is a compound exercise that targets the quadriceps, hamstrings, and glutes. It involves pushing a weighted sled with your feet in a seated position."));
 			exerciseRepository.save(new Exercise(2, "Chest", "Dumbbell Chest Press", "The dumbbell chest press is a classic strength-training exercise for the chest muscles. It involves pressing dumbbells upward while lying on a bench."));
