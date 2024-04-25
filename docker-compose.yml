@@ -19,7 +19,7 @@ services:
     volumes:
       - C:\Users\dtera\Documents\Projects\SpringBoot\liftnotes_db:/var/lib/mysql
     ports:
-      - 3306:3306
+      - 3307:3306
     environment:
       MYSQL_DATABASE: workouts
       MYSQL_ROOT_PASSWORD: password
