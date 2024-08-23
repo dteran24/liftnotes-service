@@ -2,12 +2,14 @@ package services.liftNotes.Workouts.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import services.liftNotes.config.models.ApplicationUser;
 
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 public class Workout {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +23,4 @@ public class Workout {
     private String date;
     private String duration;
 
-    public Workout() {
-    }
 }
