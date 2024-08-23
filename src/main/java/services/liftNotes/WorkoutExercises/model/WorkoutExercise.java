@@ -4,14 +4,11 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import net.minidev.json.annotate.JsonIgnore;
 import services.liftNotes.Excercises.models.Exercise;
 import services.liftNotes.WorkoutExerciseHistory.models.WorkoutExerciseHistory;
-import services.liftNotes.Workouts.models.Workout;
 import services.liftNotes.config.models.ApplicationUser;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Getter
